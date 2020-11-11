@@ -12,7 +12,7 @@ public class PessoaDAO {
     PreparedStatement pst = null;
     ResultSet rs = null;
     
-    public void setIdPessoa(Pessoa p){
+    public void getIdPessoa(Pessoa p){
         String sql = "SELECT MAX(id) as maxId FROM pessoa";
         
         conn = Conexao.conectar();
@@ -25,9 +25,7 @@ public class PessoaDAO {
                 p.setId(rs.getInt(1));
             }
         }catch (Exception e){
-            System.out.println("Não foi possível salvar o ID.");
-        }finally{
-            Conexao.desconectar(conn);
+            System.out.println("Não foi possível copiar o ID." +e);        
         }
     }
     
@@ -65,7 +63,7 @@ public class PessoaDAO {
             if(r>0){
                 System.out.println("Dados inseridos com sucesso!");
             }
-            setIdPessoa(p);
+            getIdPessoa(p);
             return true;
         } catch(Exception e){
             System.out.println("Não foi possível inserir!"+e);
@@ -81,10 +79,11 @@ public class PessoaDAO {
         conn = Conexao.conectar();
         
         try{
+            getIdPessoa(p);
             pst = conn.prepareStatement(sql);
             pst.setString(1, p.getNome());
             pst.setString(2, p.getProfissao());
-            pst.setString(3, String.valueOf(p.getId()));
+            pst.setInt(3, p.getId());
             int r = pst.executeUpdate();
             if(r>0){
                 System.out.println("Alterado com sucesso!");
@@ -104,8 +103,9 @@ public class PessoaDAO {
         conn = Conexao.conectar();
         
         try{
+            getIdPessoa(p);
             pst = conn.prepareStatement(sql);
-            pst.setString(1, String.valueOf(p.getId()));
+            pst.setInt(1, p.getId());
             int r = pst.executeUpdate();
             if(r>0){
                 System.out.println("Deletado com sucesso!");

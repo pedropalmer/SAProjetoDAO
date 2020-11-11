@@ -21,9 +21,12 @@ import org.junit.internal.runners.statements.ExpectException;
 public class PessoaDAOTest {
     
     Pessoa pessoa;
+    Pessoa pessoa2;
+    
     
     public PessoaDAOTest() {
         pessoa = new Pessoa("Sandra", "Fêssora");
+        pessoa2 = new Pessoa("Lzd", "Templar");
     }
     
     @BeforeClass
@@ -66,7 +69,7 @@ public class PessoaDAOTest {
         System.out.println("altera");
         PessoaDAO instance = new PessoaDAO();
         
-        assertTrue(instance.consulta());
+        assertTrue(instance.altera(pessoa2));
     }
     
     @Test
@@ -74,6 +77,6 @@ public class PessoaDAOTest {
         System.out.println("deleta");
         PessoaDAO instance = new PessoaDAO();
         
-        assertTrue(instance.consulta());
+        assertTrue(instance.deleta(pessoa2));
     }
 }
